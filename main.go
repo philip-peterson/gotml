@@ -1,6 +1,6 @@
 // You can edit this code!
 // Click here and start typing.
-package main
+package gotml
 
 import (
 	"fmt"
@@ -144,22 +144,4 @@ func render(ctx Bag, tree GotmlTree) string {
 
 func Attr(k string, v interface{}) SetAttr {
 	return SetAttr{K: k, V: v}
-}
-
-func main() {
-	ctx := Bag{}
-
-	var App Component = func(attrs Bag, children ...GotmlTree) GotmlTree {
-		return Gotml("html",
-			Gotml("head"),
-			Gotml("body",
-				Gotml("div", Attr("style", "color: red"), "Lorem ipsum"),
-				Gotml("hr"),
-				Gotml("div", "Hello world"),
-			),
-		)
-	}
-
-	myTree := Gotml(App)
-	fmt.Println(render(ctx, myTree))
 }

@@ -1,4 +1,4 @@
-package main
+package gotml
 
 import (
 	"testing"

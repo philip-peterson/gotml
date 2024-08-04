@@ -17,7 +17,7 @@ Gotml is a component-based HTML templating library for Go. It allows you to crea
 Define a component with attributes and children:
 
 ```go
-package main
+package gotml
 
 import "github.com/philip-peterson/gotml"
 
@@ -32,7 +32,7 @@ var BorderedDiv Component = func(attrs map[string]interface{}, children ...gotml
 Render HTML from a component:
 
 ```go
-package main
+package gotml
 
 import (
     "fmt"
