@@ -22,7 +22,7 @@ func TestBasicHTMLStructure(t *testing.T) {
 
 	myTree := Gotml(App)
 	expected := "<html><head /><body><div style=\"color: red\">Lorem ipsum</div><hr /><div>Hello world</div></body></html>"
-	result := render(ctx, myTree)
+	result := Render(ctx, myTree)
 
 	assert.Equal(t, expected, result)
 }
@@ -41,7 +41,7 @@ func TestNestedElements(t *testing.T) {
 
 	myTree := Gotml(App)
 	expected := "<div><p>Paragraph 1</p><div><span>Nested span</span></div></div>"
-	result := render(ctx, myTree)
+	result := Render(ctx, myTree)
 
 	assert.Equal(t, expected, result)
 }
@@ -55,7 +55,7 @@ func TestAttributesHandling(t *testing.T) {
 
 	myTree := Gotml(App)
 	expected := "<button id=\"submit-btn\">Submit</button>"
-	result := render(ctx, myTree)
+	result := Render(ctx, myTree)
 
 	assert.Equal(t, expected, result)
 }
@@ -69,7 +69,7 @@ func TestEmptyComponent(t *testing.T) {
 
 	myTree := Gotml(App)
 	expected := "<div />"
-	result := render(ctx, myTree)
+	result := Render(ctx, myTree)
 
 	assert.Equal(t, expected, result)
 }
@@ -87,7 +87,7 @@ func TestMultipleChildren(t *testing.T) {
 
 	myTree := Gotml(App)
 	expected := "<section><header>Header content</header><article>Article content</article><footer>Footer content</footer></section>"
-	result := render(ctx, myTree)
+	result := Render(ctx, myTree)
 
 	assert.Equal(t, expected, result)
 }
@@ -101,7 +101,7 @@ func TestTextContentOnly(t *testing.T) {
 
 	myTree := Gotml(App)
 	expected := "<div>Just text</div>"
-	result := render(ctx, myTree)
+	result := Render(ctx, myTree)
 
 	assert.Equal(t, expected, result)
 }
@@ -118,7 +118,7 @@ func TestEmptyChildren(t *testing.T) {
 
 	myTree := Gotml(App)
 	expected := "<ul><li>Item 1</li><li>Item 2</li></ul>"
-	result := render(ctx, myTree)
+	result := Render(ctx, myTree)
 
 	assert.Equal(t, expected, result)
 }

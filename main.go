@@ -87,10 +87,10 @@ func Gotml(tagName any, instructions ...any) GotmlTree {
 	}
 }
 
-func render(ctx Bag, tree GotmlTree) string {
+func Render(ctx Bag, tree GotmlTree) string {
 	if tree.gotmlFunc != nil {
 		f := *tree.gotmlFunc
-		return render(
+		return Render(
 			ctx,
 			f(tree.attrs, tree.children...),
 		)
@@ -129,7 +129,7 @@ func render(ctx Bag, tree GotmlTree) string {
 			result += ">"
 		}
 		for _, child := range tree.children {
-			result += render(ctx, child)
+			result += Render(ctx, child)
 		}
 		if !isFragment {
 			result += "</"
