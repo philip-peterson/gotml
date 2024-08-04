@@ -51,4 +51,4 @@ func main() {
 }
 ```
 
-For more detailed usage and examples, please see the [tests](#main_test.go).
+For more detailed usage and examples, please see the [tests](https://github.com/philip-peterson/gotml/blob/main/main_test.go).
