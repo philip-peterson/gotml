@@ -1,53 +1,90 @@
-# Gotml
+# gotml
 
-Gotml is a component-based HTML templating library for Go. It allows you to create and render HTML structures using a component-oriented approach, offering an alternative to Go's built-in template package. With Gotml, you can define reusable components and compose HTML elements in a more modular and expressive way.
+`gotml` is a component-based HTML templating library for Go. It allows you to create and render HTML structures using a component-oriented approach, offering an alternative to Go's built-in template package. With `gotml`, you can define reusable components and compose HTML elements in a more modular and expressive way.
 
 ## Overview
 
-### Why Use Gotml?
+### Why Use `gotml`?
 
-- **Component-Based Approach**: Unlike Go templates, which are primarily text-based and less modular, Gotml enables you to define components as functions. This allows for better reuse and organization of HTML structures.
+- **Component-Based Approach**: Unlike Go templates, which are primarily text-based and less modular, `gotml` enables you to define components as functions. This allows for better reuse and organization of HTML structures.
 
-- **Dynamic Composition**: Easily compose complex HTML structures by combining simple components. Gotml supports variadic parameters for components, making it straightforward to include multiple children or attributes.
+- **Reduce Nesting**: In Go templates, refactors can easily create merge conflicts due to deep nesting of HTML. In contrast, `gotml` 
 
-- **Improved Readability**: Gotml’s approach helps to maintain readability by separating concerns into manageable components, avoiding the verbosity and complexity often found in traditional template-based HTML generation.
+- **Dynamic Composition**: Easily compose complex HTML structures by combining simple components. `gotml` supports variadic parameters for components, making it straightforward to include multiple children or attributes.
+
+- **Improved Readability**: `gotml`’s approach helps to maintain readability by separating concerns into manageable components, avoiding the verbosity and complexity often found in traditional template-based HTML generation.
 
 ### Basic Usage
 
 Define a component with attributes and children:
 
 ```go
-package gotml
-
-import "github.com/philip-peterson/gotml"
-
-var BorderedDiv Component = func(attrs map[string]interface{}, children ...gotml.GotmlTree) gotml.GotmlTree {
-    return gotml.Gotml("div",
-        gotml.Attr("style", "border: 3px double black"),
-        children...,
-    )
-}
-```
-
-Render HTML from a component:
-
-```go
-package gotml
+package main
 
 import (
-    "fmt"
-    "github.com/philip-peterson/gotml"
+	"fmt"
+
+	g "github.com/philip-peterson/gotml"
 )
 
 func main() {
-    ctx := map[string]interface{}{}
-    
-    myTree := gotml.Gotml(BorderedDiv,
-        gotml.Gotml("p", "Hello, world!"),
-    )
+	var BorderedDiv g.Component = func(attrs *g.AttrList, children ...g.GotmlTree) g.GotmlTree {
+		return g.Gotml("div").
+			Attr("style", "border: 3px double black").
+			Children(
+				g.AsAny(children)...,
+			)
+	}
+}
+```
 
-    result := gotml.Render(ctx, myTree)
-    fmt.Println(result)
+Note that due to Go's quirk where it cannot convert a slice of a type, `[]T` to a slice of any, `[]any` without help, we use `g.AsAny(...)` to perform this conversion.
+
+Now, we can render the component to HTML:
+
+```go
+myTree := g.Gotml(BorderedDiv).Children(
+    g.Gotml("p").Children("Hello, world!"),
+)
+
+result := g.Render(ctx, myTree)
+fmt.Println(result)
+```
+
+Creating the output:
+
+```
+<div style="border: 3px double black"><p>Hello, world!</p></div>
+```
+
+The full program is therefore as follows:
+
+```go
+package main
+
+import (
+	"fmt"
+
+	g "github.com/philip-peterson/gotml"
+)
+
+func main() {
+	var BorderedDiv g.Component = func(attrs *g.AttrList, children ...g.GotmlTree) g.GotmlTree {
+		return g.Gotml("div").
+			Attr("style", "border: 3px double black").
+			Children(
+				g.AsAny(children)...,
+			)
+	}
+
+	ctx := map[string]interface{}{}
+
+	myTree := g.Gotml(BorderedDiv).Children(
+		g.Gotml("p").Children("Hello, world!"),
+	)
+
+	result := g.Render(ctx, myTree)
+	fmt.Println(result)
 }
 ```
 

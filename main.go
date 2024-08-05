@@ -31,7 +31,7 @@ type AttrList struct {
 	next *AttrList
 }
 
-func Gotml(tagName any) GotmlTree {
+func Tree(tagName any) GotmlTree {
 	var realChildren []GotmlTree
 
 	var terminalTagName *string

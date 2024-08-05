@@ -10,19 +10,19 @@ func TestBasicHTMLStructure(t *testing.T) {
 	ctx := Bag{}
 
 	var App Component = func(attrs *AttrList, children ...GotmlTree) GotmlTree {
-		return Gotml("html").Children(
-			Gotml("head"),
-			Gotml("body").Children(
-				Gotml("div").
+		return Tree("html").Children(
+			Tree("head"),
+			Tree("body").Children(
+				Tree("div").
 					Attr("style", "color: red").
 					Children("Lorem ipsum"),
-				Gotml("hr"),
-				Gotml("div").Children("Hello world"),
+				Tree("hr"),
+				Tree("div").Children("Hello world"),
 			),
 		)
 	}
 
-	myTree := Gotml(App)
+	myTree := Tree(App)
 	expected := "<html><head /><body><div style=\"color: red\">Lorem ipsum</div><hr /><div>Hello world</div></body></html>"
 	result := Render(ctx, myTree)
 
