@@ -1,5 +1,9 @@
 # gotml
 
+<p align="center">
+	<img src="https://raw.githubusercontent.com/philip-peterson/gotml/main/gotml_logo.png" />
+</p>
+
 `gotml` is a component-based HTML templating library for Go. It allows you to create and render HTML structures using a component-oriented approach, offering an alternative to Go's built-in template package. With `gotml`, you can define reusable components and compose HTML elements in a more modular and expressive way.
 
 ## Overview
