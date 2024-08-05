@@ -151,4 +151,4 @@ func main() {
 
 For more detailed usage and examples, please see the [tests](https://github.com/philip-peterson/gotml/blob/main/main_test.go).
 
-* Output has been prettified for readability.
+\* Output has been prettified for readability.
