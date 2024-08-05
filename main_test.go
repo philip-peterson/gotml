@@ -29,98 +29,120 @@ func TestBasicHTMLStructure(t *testing.T) {
 	assert.Equal(t, expected, result)
 }
 
-// func TestNestedElements(t *testing.T) {
-// 	ctx := Bag{}
+func TestNestedElements(t *testing.T) {
+	ctx := Bag{}
 
-// 	var App Component = func(attrs Bag, children ...GotmlTree) GotmlTree {
-// 		return Gotml("div",
-// 			Gotml("p", "Paragraph 1"),
-// 			Gotml("div",
-// 				Gotml("span", "Nested span"),
-// 			),
-// 		)
-// 	}
+	var App Component = func(attrs *AttrList, children ...GotmlTree) GotmlTree {
+		return Tree("div").Children(
+			Tree("p").Children("Paragraph 1"),
+			Tree("div").Children(
+				Tree("span").Children("Nested span"),
+			),
+		)
+	}
 
-// 	myTree := Gotml(App)
-// 	expected := "<div><p>Paragraph 1</p><div><span>Nested span</span></div></div>"
-// 	result := Render(ctx, myTree)
+	myTree := Tree(App)
+	expected := "<div><p>Paragraph 1</p><div><span>Nested span</span></div></div>"
+	result := Render(ctx, myTree)
 
-// 	assert.Equal(t, expected, result)
-// }
+	assert.Equal(t, expected, result)
+}
 
-// func TestAttributesHandling(t *testing.T) {
-// 	ctx := Bag{}
+func TestAttributesHandling(t *testing.T) {
+	ctx := Bag{}
 
-// 	var App Component = func(attrs Bag, children ...GotmlTree) GotmlTree {
-// 		return Gotml("button", Attr("id", "submit-btn"), "Submit")
-// 	}
+	var App Component = func(attrs *AttrList, children ...GotmlTree) GotmlTree {
+		return Tree("button").Attr("id", "submit-btn").Children("Submit")
+	}
 
-// 	myTree := Gotml(App)
-// 	expected := "<button id=\"submit-btn\">Submit</button>"
-// 	result := Render(ctx, myTree)
+	myTree := Tree(App)
+	expected := "<button id=\"submit-btn\">Submit</button>"
+	result := Render(ctx, myTree)
 
-// 	assert.Equal(t, expected, result)
-// }
+	assert.Equal(t, expected, result)
+}
 
-// func TestEmptyComponent(t *testing.T) {
-// 	ctx := Bag{}
+func TestEmptyComponent(t *testing.T) {
+	ctx := Bag{}
 
-// 	var App Component = func(attrs Bag, children ...GotmlTree) GotmlTree {
-// 		return Gotml("div") // No children, no attributes
-// 	}
+	var App Component = func(attrs *AttrList, children ...GotmlTree) GotmlTree {
+		return Tree("div") // No children, no attributes
+	}
 
-// 	myTree := Gotml(App)
-// 	expected := "<div />"
-// 	result := Render(ctx, myTree)
+	myTree := Tree(App)
+	expected := "<div />"
+	result := Render(ctx, myTree)
 
-// 	assert.Equal(t, expected, result)
-// }
+	assert.Equal(t, expected, result)
+}
 
-// func TestMultipleChildren(t *testing.T) {
-// 	ctx := Bag{}
+func TestMultipleChildren(t *testing.T) {
+	ctx := Bag{}
 
-// 	var App Component = func(attrs Bag, children ...GotmlTree) GotmlTree {
-// 		return Gotml("section",
-// 			Gotml("header", "Header content"),
-// 			Gotml("article", "Article content"),
-// 			Gotml("footer", "Footer content"),
-// 		)
-// 	}
+	var App Component = func(attrs *AttrList, children ...GotmlTree) GotmlTree {
+		return Tree("section").Children(
+			Tree("header").Children("Header content"),
+			Tree("article").Children("Article content"),
+			Tree("footer").Children("Footer content"),
+		)
+	}
 
-// 	myTree := Gotml(App)
-// 	expected := "<section><header>Header content</header><article>Article content</article><footer>Footer content</footer></section>"
-// 	result := Render(ctx, myTree)
+	myTree := Tree(App)
+	expected := "<section><header>Header content</header><article>Article content</article><footer>Footer content</footer></section>"
+	result := Render(ctx, myTree)
 
-// 	assert.Equal(t, expected, result)
-// }
+	assert.Equal(t, expected, result)
+}
 
-// func TestTextContentOnly(t *testing.T) {
-// 	ctx := Bag{}
+func TestTextContentOnly(t *testing.T) {
+	ctx := Bag{}
 
-// 	var App Component = func(attrs Bag, children ...GotmlTree) GotmlTree {
-// 		return Gotml("div", "Just text")
-// 	}
+	var App Component = func(attrs *AttrList, children ...GotmlTree) GotmlTree {
+		return Tree("div").Children("Just text")
+	}
 
-// 	myTree := Gotml(App)
-// 	expected := "<div>Just text</div>"
-// 	result := Render(ctx, myTree)
+	myTree := Tree(App)
+	expected := "<div>Just text</div>"
+	result := Render(ctx, myTree)
 
-// 	assert.Equal(t, expected, result)
-// }
+	assert.Equal(t, expected, result)
+}
 
-// func TestEmptyChildren(t *testing.T) {
-// 	ctx := Bag{}
+func TestEmptyChildren(t *testing.T) {
+	ctx := Bag{}
 
-// 	var App Component = func(attrs Bag, children ...GotmlTree) GotmlTree {
-// 		return Gotml("ul",
-// 			Gotml("li", "Item 1"),
-// 			Gotml("li", "Item 2"),
-// 		)
-// 	}
+	var App Component = func(attrs *AttrList, children ...GotmlTree) GotmlTree {
+		return Tree("ul").Children(
+			Tree("li").Children("Item 1"),
+			Tree("li").Children("Item 2"),
+		)
+	}
 
-// 	myTree := Gotml(App)
-// 	expected := "<ul><li>Item 1</li><li>Item 2</li></ul>"
-// 	result := Render(ctx, myTree)
+	myTree := Tree(App)
+	expected := "<ul><li>Item 1</li><li>Item 2</li></ul>"
+	result := Render(ctx, myTree)
 
-// 	assert.Equal(t, expected, result)
-// }
+	assert.Equal(t, expected, result)
+}
+
+func TestNestedComponents(t *testing.T) {
+	ctx := Bag{}
+
+	var MainContent Component = func(attrs *AttrList, children ...GotmlTree) GotmlTree {
+		return Tree("div").Attr("class", "main-content").Children(
+			Tree("p").Children(AsAny(children)...),
+		)
+	}
+
+	var App Component = func(attrs *AttrList, children ...GotmlTree) GotmlTree {
+		return Tree(MainContent).Children(
+			Tree("section").Children("This is the main content."),
+		)
+	}
+
+	myTree := Tree(App)
+	expected := "<div class=\"main-content\"><p><section>This is the main content.</section></p></div>"
+	result := Render(ctx, myTree)
+
+	assert.Equal(t, expected, result)
+}

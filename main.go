@@ -32,8 +32,6 @@ type AttrList struct {
 }
 
 func Tree(tagName any) GotmlTree {
-	var realChildren []GotmlTree
-
 	var terminalTagName *string
 	var gotmlFunc *Component
 
@@ -56,7 +54,6 @@ func Tree(tagName any) GotmlTree {
 	return GotmlTree{
 		terminalTagName: terminalTagName,
 		gotmlFunc:       gotmlFunc,
-		children:        realChildren,
 	}
 }
 
@@ -91,7 +88,7 @@ func (g GotmlTree) Children(children ...any) GotmlTree {
 			}
 			copied.children = append(copied.children, v)
 		default:
-			fmt.Fprintf(os.Stderr, "Unsupported child type")
+			fmt.Fprintf(os.Stderr, "Unsupported child type. Perhaps you need AsAny(...).")
 		}
 	}
 
