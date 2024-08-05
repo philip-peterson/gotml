@@ -26,39 +26,9 @@ type SetAttr struct {
 
 type Component func(Bag, ...GotmlTree) GotmlTree
 
-func Gotml(tagName any, instructions ...any) GotmlTree {
+func Gotml(tagName any) GotmlTree {
 	var realChildren []GotmlTree
 	attrs := Bag{}
-
-	attrsFinished := false
-	for _, inst := range instructions {
-		switch any(inst).(type) {
-		case SetAttr:
-			// Set attribute instruction
-			if attrsFinished {
-				fmt.Fprintf(os.Stderr, "Attribute found in non-attribute position")
-			}
-			casted := any(inst).(SetAttr)
-			attrs[casted.K] = casted.V
-		case GotmlTree:
-			// Child instruction
-			attrsFinished = true
-			casted := any(inst).(GotmlTree)
-			realChildren = append(realChildren, casted)
-		case string:
-			// Child instruction (text node)
-			attrsFinished = true
-			casted := any(inst).(string)
-			t := "#text"
-			v := GotmlTree{
-				terminalTagName: &t,
-				textContent:     casted,
-			}
-			realChildren = append(realChildren, v)
-		default:
-			fmt.Fprintf(os.Stderr, "Unsupported instruction type")
-		}
-	}
 
 	var terminalTagName *string
 	var gotmlFunc *Component
@@ -85,6 +55,44 @@ func Gotml(tagName any, instructions ...any) GotmlTree {
 		children:        realChildren,
 		attrs:           attrs,
 	}
+}
+
+func (g GotmlTree) Attrs(attrs ...SetAttr) GotmlTree {
+	copied := g
+	copied.attrs = map[string]interface{}{}
+
+	for _, inst := range attrs {
+		copied.attrs[inst.K] = inst.V
+	}
+
+	return copied
+}
+
+func (g GotmlTree) Children(children ...any) GotmlTree {
+	copied := g
+	copied.children = []GotmlTree{}
+
+	for _, inst := range children {
+		switch any(inst).(type) {
+		case GotmlTree:
+			// Child instruction
+			casted := any(inst).(GotmlTree)
+			copied.children = append(copied.children, casted)
+		case string:
+			// Child instruction (text node)
+			casted := any(inst).(string)
+			t := "#text"
+			v := GotmlTree{
+				terminalTagName: &t,
+				textContent:     casted,
+			}
+			copied.children = append(copied.children, v)
+		default:
+			fmt.Fprintf(os.Stderr, "Unsupported child type")
+		}
+	}
+
+	return copied
 }
 
 func Render(ctx Bag, tree GotmlTree) string {
