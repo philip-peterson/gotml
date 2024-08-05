@@ -54,10 +54,21 @@ func main() {
 }
 ```
 
-The output:
+The output*:
 
 ```
-<html><head /><body><div style="color: red">Lorem ipsum</div><hr /><div>Hello world</div></body></html>
+<html>
+   <head />
+   <body>
+      <div style="color: red">
+         Lorem ipsum
+      </div>
+      <hr />
+      <div>
+         Hello world
+      </div>
+   </body>
+</html>
 ```
 
 ### Advanced Usage: Passing through Children
@@ -97,10 +108,14 @@ result := g.Render(ctx, myTree)
 fmt.Println(result)
 ```
 
-Creating the output:
+Creating the output*:
 
 ```
-<div style="border: 3px double black"><p>Hello, world!</p></div>
+<div style="border: 3px double black">
+   <p>
+      Hello, world!
+   </p>
+</div>
 ```
 
 The full program is therefore as follows:
@@ -135,3 +150,5 @@ func main() {
 ```
 
 For more detailed usage and examples, please see the [tests](https://github.com/philip-peterson/gotml/blob/main/main_test.go).
+
+* Output has been prettified for readability.
