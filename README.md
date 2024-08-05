@@ -29,7 +29,7 @@ import (
 
 func main() {
 	var BorderedDiv g.Component = func(attrs *g.AttrList, children ...g.GotmlTree) g.GotmlTree {
-		return g.Gotml("div").
+		return g.Tree("div").
 			Attr("style", "border: 3px double black").
 			Children(
 				g.AsAny(children)...,
@@ -43,8 +43,8 @@ Note that due to Go's quirk where it cannot convert a slice of a type, `[]T` to 
 Now, we can render the component to HTML:
 
 ```go
-myTree := g.Gotml(BorderedDiv).Children(
-    g.Gotml("p").Children("Hello, world!"),
+myTree := g.Tree(BorderedDiv).Children(
+    g.Tree("p").Children("Hello, world!"),
 )
 
 result := g.Render(ctx, myTree)
@@ -70,7 +70,7 @@ import (
 
 func main() {
 	var BorderedDiv g.Component = func(attrs *g.AttrList, children ...g.GotmlTree) g.GotmlTree {
-		return g.Gotml("div").
+		return g.Tree("div").
 			Attr("style", "border: 3px double black").
 			Children(
 				g.AsAny(children)...,
@@ -79,8 +79,8 @@ func main() {
 
 	ctx := map[string]interface{}{}
 
-	myTree := g.Gotml(BorderedDiv).Children(
-		g.Gotml("p").Children("Hello, world!"),
+	myTree := g.Tree(BorderedDiv).Children(
+		g.Tree("p").Children("Hello, world!"),
 	)
 
 	result := g.Render(ctx, myTree)
