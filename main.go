@@ -172,3 +172,11 @@ func (list *AttrList) ToBag() Bag {
 	}
 	return b
 }
+
+func AsAny(children []GotmlTree) []any {
+	r := make([]any, len(children))
+	for i, c := range children {
+		r[i] = c
+	}
+	return r
+}
