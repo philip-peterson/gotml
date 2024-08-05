@@ -14,7 +14,49 @@
 
 - **Improved Readability**: `gotml`’s approach helps to maintain readability by separating concerns into manageable components, avoiding the verbosity and complexity often found in traditional template-based HTML generation.
 
-### Basic Usage
+### Basic Usage: Define a tree structure
+
+You can define a simple tree structure just like HTML or other frameworks.
+
+```go
+package main
+
+import (
+	"fmt"
+
+	g "github.com/philip-peterson/gotml"
+)
+
+func main() {
+	ctx := g.Bag{}
+
+	var App g.Component = func(attrs *g.AttrList, children ...g.GotmlTree) g.GotmlTree {
+		return g.Tree("html").Children(
+			g.Tree("head"),
+			g.Tree("body").Children(
+				g.Tree("div").
+					Attr("style", "color: red").
+					Children("Lorem ipsum"),
+				g.Tree("hr"),
+				g.Tree("div").Children("Hello world"),
+			),
+		)
+	}
+
+	myTree := g.Tree(App)
+	result := g.Render(ctx, myTree)
+
+	fmt.Println(result)
+}
+```
+
+The output:
+
+```
+<html><head /><body><div style="color: red">Lorem ipsum</div><hr /><div>Hello world</div></body></html>
+```
+
+### Advanced Usage: Passing through Children
 
 Define a component with attributes and children:
 
