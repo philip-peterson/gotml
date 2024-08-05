@@ -1,3 +1,5 @@
+github.com/1995parham/linkedlist v0.0.0-20240205220852-4e3b68fa86de h1:vo8lu5Gbte4UR4Gsm5pzxst1xgyHa2bX0Q5RIlGyG9g=
+github.com/1995parham/linkedlist v0.0.0-20240205220852-4e3b68fa86de/go.mod h1:oxniDlL+Fr48q2IUPwDgmxt7T6j9dhwhgdPaho7Q7/M=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=

@@ -9,12 +9,12 @@ import (
 func TestBasicHTMLStructure(t *testing.T) {
 	ctx := Bag{}
 
-	var App Component = func(attrs Bag, children ...GotmlTree) GotmlTree {
+	var App Component = func(attrs *AttrList, children ...GotmlTree) GotmlTree {
 		return Gotml("html").Children(
 			Gotml("head"),
 			Gotml("body").Children(
 				Gotml("div").
-					Attrs(SetAttr{K: "style", V: "color: red"}).
+					Attr("style", "color: red").
 					Children("Lorem ipsum"),
 				Gotml("hr"),
 				Gotml("div").Children("Hello world"),

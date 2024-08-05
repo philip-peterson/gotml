@@ -12,23 +12,27 @@ type GotmlTree struct {
 	terminalTagName *string
 	gotmlFunc       *Component
 
-	attrs       map[string]interface{}
+	attrs       *AttrList
 	children    []GotmlTree
 	textContent string
 }
 
 type Bag = map[string]interface{}
 
-type SetAttr struct {
-	K string
-	V interface{}
+type AttrNode struct {
+	Key   string
+	Value interface{}
 }
 
-type Component func(Bag, ...GotmlTree) GotmlTree
+type Component func(*AttrList, ...GotmlTree) GotmlTree
+
+type AttrList struct {
+	this AttrNode
+	next *AttrList
+}
 
 func Gotml(tagName any) GotmlTree {
 	var realChildren []GotmlTree
-	attrs := Bag{}
 
 	var terminalTagName *string
 	var gotmlFunc *Component
@@ -53,16 +57,15 @@ func Gotml(tagName any) GotmlTree {
 		terminalTagName: terminalTagName,
 		gotmlFunc:       gotmlFunc,
 		children:        realChildren,
-		attrs:           attrs,
 	}
 }
 
-func (g GotmlTree) Attrs(attrs ...SetAttr) GotmlTree {
+func (g GotmlTree) Attr(key string, value interface{}) GotmlTree {
 	copied := g
-	copied.attrs = map[string]interface{}{}
 
-	for _, inst := range attrs {
-		copied.attrs[inst.K] = inst.V
+	copied.attrs = &AttrList{
+		this: AttrNode{Key: key, Value: value},
+		next: copied.attrs,
 	}
 
 	return copied
@@ -116,10 +119,14 @@ func Render(ctx Bag, tree GotmlTree) string {
 		result += "<" + tagName
 	}
 
-	if len(tree.attrs) > 0 && isFragment {
+	if tree.attrs != nil && isFragment {
 		fmt.Fprintf(os.Stderr, "Document fragments cannot have attributes")
 	} else {
-		for name, val := range tree.attrs {
+		cur := tree.attrs
+		for cur != nil {
+			name := cur.this.Key
+			val := cur.this.Value
+
 			result += " "
 			result += name
 			result += "=\""
@@ -129,6 +136,8 @@ func Render(ctx Bag, tree GotmlTree) string {
 			}
 			result += html.EscapeString(valAsString)
 			result += "\""
+
+			cur = cur.next
 		}
 	}
 
@@ -150,6 +159,16 @@ func Render(ctx Bag, tree GotmlTree) string {
 	return result + " />"
 }
 
-func Attr(k string, v interface{}) SetAttr {
-	return SetAttr{K: k, V: v}
+func Attr(k string, v interface{}) AttrNode {
+	return AttrNode{Key: k, Value: v}
+}
+
+func (list *AttrList) ToBag() Bag {
+	b := Bag{}
+	cur := list
+	for cur != nil {
+		b[cur.this.Key] = cur.this.Value
+		cur = cur.next
+	}
+	return b
 }
