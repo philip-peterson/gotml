@@ -27,8 +27,8 @@ type AttrNode struct {
 type Component func(*AttrList, ...GotmlTree) GotmlTree
 
 type AttrList struct {
-	this AttrNode
-	next *AttrList
+	This AttrNode
+	Next *AttrList
 }
 
 func Tree(tagName any) GotmlTree {
@@ -61,8 +61,8 @@ func (g GotmlTree) Attr(key string, value interface{}) GotmlTree {
 	copied := g
 
 	copied.attrs = &AttrList{
-		this: AttrNode{Key: key, Value: value},
-		next: copied.attrs,
+		This: AttrNode{Key: key, Value: value},
+		Next: copied.attrs,
 	}
 
 	return copied
@@ -121,8 +121,8 @@ func Render(ctx Bag, tree GotmlTree) string {
 	} else {
 		cur := tree.attrs
 		for cur != nil {
-			name := cur.this.Key
-			val := cur.this.Value
+			name := cur.This.Key
+			val := cur.This.Value
 
 			result += " "
 			result += name
@@ -134,7 +134,7 @@ func Render(ctx Bag, tree GotmlTree) string {
 			result += html.EscapeString(valAsString)
 			result += "\""
 
-			cur = cur.next
+			cur = cur.Next
 		}
 	}
 
@@ -164,8 +164,8 @@ func (list *AttrList) ToBag() Bag {
 	b := Bag{}
 	cur := list
 	for cur != nil {
-		b[cur.this.Key] = cur.this.Value
-		cur = cur.next
+		b[cur.This.Key] = cur.This.Value
+		cur = cur.Next
 	}
 	return b
 }
