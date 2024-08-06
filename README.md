@@ -155,8 +155,10 @@ func main() {
 
 For more detailed usage and examples, please see the [tests](https://github.com/philip-peterson/gotml/blob/main/main_test.go).
 
-### See Also
+### Final Words
 
 After creating this package, I found out about [Gomponents](https://github.com/maragudk/gomponents). If you're doing serious work, you should probably just use that instead.
+
+If you can think of a reason this library is preferable to Gomponents for some reason, please reach out to let me know by opening an issue. It would be interesting to hear if this different approach poses some benefit and warrants builting out the library further.
 
 \* Output has been prettified for readability.
