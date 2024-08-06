@@ -151,4 +151,8 @@ func main() {
 
 For more detailed usage and examples, please see the [tests](https://github.com/philip-peterson/gotml/blob/main/main_test.go).
 
+### See Also
+
+After creating this package, I found out about [Gomponents](https://github.com/maragudk/gomponents). If you're doing serious work, you should probably just use that instead.
+
 \* Output has been prettified for readability.
