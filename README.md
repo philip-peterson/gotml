@@ -16,7 +16,7 @@ This library was the result of a "weekend project" as it were. It should be cons
 
 - **Component-Based Approach**: Unlike Go templates, which are primarily text-based and less modular, `gotml` enables you to define components as functions. This allows for better reuse and organization of HTML structures.
 
-- **Reduce Nesting**: In Go templates, refactors can easily create merge conflicts due to deep nesting of HTML. In contrast, `gotml` 
+- **Reduce Nesting**: In Go templates, refactors can easily create merge conflicts due to deep nesting of HTML. In contrast, `gotml` allows discrete components to be defined allowing blocks to be moved to the top level, reducing the average amount of nesting.
 
 - **Dynamic Composition**: Easily compose complex HTML structures by combining simple components. `gotml` supports variadic parameters for components, making it straightforward to include multiple children or attributes.
 
