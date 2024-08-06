@@ -8,7 +8,11 @@
 
 ## Overview
 
-### Why Use `gotml`?
+### Disclaimer
+
+This library was the result of a "weekend project" as it were. It should be considered a toy and little more, especially when there is [Gomponents](https://github.com/maragudk/gomponents). Before writing this project, I did not know Gomponents existed, and since discovering it, I think I can safely say you should use it instead of `gotml`. So, that said...
+
+### Why use `gotml` over `html/template`?
 
 - **Component-Based Approach**: Unlike Go templates, which are primarily text-based and less modular, `gotml` enables you to define components as functions. This allows for better reuse and organization of HTML structures.
 
